@@ -8,10 +8,10 @@ The following diagram depicts how the latitude and longitude range is calculated
 
 ## Requirements
 
-You need python 2.7 to run world_of_airports.py
+You will need python 2.7 to run world_of_airports.py
 
 ```
 
-python world_of_airports.py
+$ python world_of_airports.py
 
 ```
