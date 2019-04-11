@@ -4,9 +4,11 @@ import requests
 import operator
 
 def get_cords(my_lat,my_long,dist,angle):
-    """The function get_cords() converts the user defined latitude and longitude coordinates to radians """
+    
+    """The function get_cords() returns the user defined latitude and longitude coordinates in degrees"""
+    
     R = 3963.167 #Radius of the Earth in miles
-    brng = math.radians(angle) #Bearing is 90 degrees converted to radians.
+    brng = math.radians(angle) #Bearing is converted to radians.
     d = dist #Distance in miles
     lat1 = math.radians(my_lat) #Current lat point converted to radians
     lon1 = math.radians(my_long) #Current long point converted to radians
@@ -20,9 +22,12 @@ def get_cords(my_lat,my_long,dist,angle):
 
 #Code to Get Extents of Map Range within our mile radius
 def get_extent(my_lat,my_long,dist):
-    """This function intends to calculate the latitude and longitude range in which the airports will be located. The 3 angles were assumed on the basis of the understanding
-     that the user is in the middle of a rectangle (inside a circle) and to calculate the extent of latitude and longitude, we would require coordinates on the 3 edges which makes
-     the 3 respective angles with the center: 45, -45 and -135"""
+    
+    """This function intends to calculate the latitude and longitude range in which the airports will be located. 
+       The 3 angles were assumed on the basis of the understanding that the user is in the middle of a rectangle 
+       (inside a circle) and to calculate the extent of latitude and longitude, we would require coordinates on 
+       the 3 edges which makes the 3 respective angles with the center: 45, -45 and -135"""
+    
     top_left=get_cords(my_lat,my_long,dist,-45)
     bot_left=get_cords(my_lat,my_long,dist,-135)
     top_right=get_cords(my_lat,my_long,dist,45)
@@ -31,8 +36,12 @@ def get_extent(my_lat,my_long,dist):
     return(lat_range,long_range)
 
 def sorted_airport(my_loclat,my_loclong,myrange):
-    """This function returns the list of airports in the vicinity of the user provided location coordinates, sorted on the basis of their distance from the user. The limit of displayed airports have been increased
-    to 200 instead of the default 25. This function also takes care of the case in which the airport's distance from the user falls outs of the given range - for which their would be no output"""
+    
+    """This function returns the list of airports in the vicinity of the user provided location coordinates,
+    sorted on the basis of their distance from the user. The limit of displayed airports have been increased
+    to 200 instead of the default 25. This function also takes care of the case in which the airport's distance 
+    from the user falls outs of the given range - for which their would be no output"""
+    
     lat_range,long_range=get_extent(my_loclat,my_loclong,myrange)
     url="https://mikerhodes.cloudant.com/airportdb/_design/view1/_search/geo?q=lat:["+str(lat_range[0])+"00%20TO%20"+str(lat_range[1])+"]%20AND%20lon:["+str(long_range[0])+"%20TO%20+"+str(long_range[1])+"]&sort=%22%3Cdistance,lon,lat,"+str(my_loclong)+","+str(my_loclat)+",mi%3E%22&limit=200"
     my_result=[]
