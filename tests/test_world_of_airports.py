@@ -35,7 +35,7 @@ def get_extent(my_lat,my_long,dist):
     long_range=[top_left[1],top_right[1]]
     return(lat_range,long_range)
 
-def _test_sorted_airport(my_loclat,my_loclong,myrange):
+def test_sorted_airport(my_loclat,my_loclong,myrange):
     
     """This function returns the list of airports in the vicinity of the user provided location coordinates,
     sorted on the basis of their distance from the user. The limit of displayed airports have been increased
